@@ -10,6 +10,7 @@ dotenv.config();
 const pepper = process.env.BCRYPT_PASSWORD as string;
 
 export type user = {
+  id:number;
   username: string;
   first_name: string;
   last_name: string;
@@ -19,7 +20,6 @@ export type user = {
 //CRUD actions for users table
 
 export class UserStore {
-
   
   async index(): Promise<user[]> {
     try {
@@ -72,7 +72,7 @@ export class UserStore {
 
       //const {...d} = result.rows[0];
       //nconsole.log(d.username);
-      return result.rows;
+      return result.rows[0];
     } catch (err) {
       throw new Error(`Could not find user ${id}. Error: ${err}`);
     }

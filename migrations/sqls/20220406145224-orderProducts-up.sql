@@ -1,8 +1,8 @@
 /* Replace with your SQL commands */
 CREATE TABLE orderProducts (
-    id SERIAL,
-    order_id INTEGER REFERENCES orders (id) NOT NULL,
-    Product_id INTEGER REFERENCES products (id) NOT NULL,
+    id SERIAL ,
+    order_id INTEGER REFERENCES orders (id) ON DELETE CASCADE ON UPDATE NO ACTION NOT NULL ,
+    Product_id INTEGER REFERENCES products (id) ON DELETE CASCADE ON UPDATE NO ACTION NOT NULL,
     quantity BIGINT NOT NULL,
-    PRIMARY KEY (order_id,product_id,id)
+    PRIMARY KEY (order_id,Product_id,id)  
 );

@@ -1,9 +1,9 @@
 import express, { Request, Response } from 'express';
+import { authvalidator } from '../middlewares/auth';
 import { user, UserStore } from '../models/user';
 import jwt from 'jsonwebtoken';
-import { authvalidator } from '../middlewares/auth';
 
-export let token: string;
+
 
 const store = new UserStore();
 
@@ -39,10 +39,12 @@ const show = async (req: Request, res: Response) => {
 const create = async (req: Request, res: Response) => {
   try {
     const user: user = {
+      id:req.body.id , // optional
       username: req.body.username,
       first_name: req.body.first_name,
       last_name: req.body.last_name,
       password: req.body.password,
+      
     };
 
     const newUser = await store.create(user);
@@ -59,6 +61,7 @@ const create = async (req: Request, res: Response) => {
 const update = async (req: Request, res: Response) => {
   try {
     const user: user = {
+      id: req.body.id,
       username: req.body.username,
       first_name: req.body.first_name,
       last_name: req.body.last_name,
@@ -81,6 +84,7 @@ const destroy = async (req: Request, res: Response) => {
 const authenticate = async (req: Request, res: Response) => {
   try {
     const user: user = {
+      id: req.body.id,
       username: req.body.username,
       first_name: req.body.first_name,
       last_name: req.body.last_name,
@@ -88,7 +92,7 @@ const authenticate = async (req: Request, res: Response) => {
     };
     const auth = await store.authenticate(user.username, user.password);
     //edited
-    token = jwt.sign({ auth }, process.env.TOKEN_KEY as string);
+    const token=jwt.sign({ auth }, process.env.TOKEN_KEY as string);
     if (!auth) {
       return res.status(401).json({
         message: 'the username or password is invalid',

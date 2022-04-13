@@ -15,6 +15,7 @@ export type orderProduct = {
 //CRUD actions for orders table
 
 export class orderStore {
+  
   async index(): Promise<order[]> {
     try {
       // @ts-ignore
@@ -65,25 +66,23 @@ export class orderStore {
     }
   }
 
-  async addProduct(op: orderProduct): Promise<order> {
+  async addProduct(opr: orderProduct): Promise<orderProduct> {
     try {
       // @ts-ignore
       const conn = await Client.connect();
 
       const sql =
-        'INSERT INTO orderProducts (order_id,product_id,quantity) VALUES($1, $2, $3) RETURNING *;';
+        'INSERT INTO orderProducts (order_id,Product_id,quantity) VALUES($1, $2, $3) RETURNING *;';
 
       const result = await conn.query(sql, [
-        op.order_id,
-        op.product_id,
-        op.quantity,
+        opr.order_id,
+        opr.product_id,
+        opr.quantity,
       ]);
-
-      const orderProduct = result.rows[0];
 
       conn.release();
 
-      return orderProduct;
+      return result.rows[0];
     } catch (err) {
       throw new Error(`Could not add add product to order Error: ${err}`);
     }
