@@ -40,3 +40,28 @@ These are the notes from a meeting with the frontend developer that describe wha
 - user_id
 - status of order (active or complete)
 
+#### Database Schema
+
+## User
+id
+username (unique) 2 users can't have the same username
+first_name
+last_name
+passoword
+
+## products
+id 
+name
+price
+
+## orders
+id
+status
+user_id (foreign key)
+
+## orderProducts
+id
+Product_id (foreign key)
+order_id (foreign key)
+quantity
+primary key(id,Product_id,order_id) so that you can add the same product multiple times with no issues
