@@ -23,11 +23,10 @@ const po: orderProduct = {
 };
 
 const p: product = {
-  id:1,
+  id: 1,
   name: 'iphone 12',
   price: '$700',
 };
-
 
 describe('Orders Model', () => {
   it('should have an index method', () => {
@@ -65,15 +64,13 @@ describe('Orders Model', () => {
     await conn.query('DELETE FROM products');
     await conn.query('DELETE FROM orders');
     await conn.query('DELETE FROM orderProducts');
-    
+
     conn.release();
   });
-  
+
   beforeAll(async () => {
-  
     await uStore.create(u);
     await pStore.create(p);
-    
   });
 
   describe('CRUD', () => {

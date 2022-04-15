@@ -37,9 +37,7 @@ export class orderProducts {
 
       conn.release();
 
-
       return result.rows;
-      
     } catch (err) {
       throw new Error(`unable get products and orders: ${err}`);
     }

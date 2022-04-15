@@ -3,7 +3,7 @@ import Client from '../../db';
 import { order, orderProduct, orderStore } from '../../models/order';
 import { UserStore, user } from '../../models/user';
 import { product, productStore } from '../../models/product';
-import {orderProducts} from '../../services/orderProduct'
+import { orderProducts } from '../../services/orderProduct';
 
 const oStore = new orderStore();
 const uStore = new UserStore();
@@ -25,18 +25,16 @@ const op: orderProduct = {
 };
 
 const p: product = {
-  id:1,
+  id: 1,
   name: 'iphone 12',
   price: '$700',
 };
 
 const o: order = {
-    id:1,
-    status: "active",
-    user_id:1
-  };
-
- 
+  id: 1,
+  status: 'active',
+  user_id: 1,
+};
 
 describe('OrderProducts Model', () => {
   it('should have an All orders method', () => {
@@ -52,12 +50,10 @@ describe('OrderProducts Model', () => {
   });
 
   beforeAll(async () => {
-
     await uStore.create(u);
     await pStore.create(p);
     await oStore.create(o);
     await oStore.addProduct(op);
-    
   });
 
   afterAll(async () => {
@@ -71,32 +67,30 @@ describe('OrderProducts Model', () => {
     await conn.query('DELETE FROM products');
     await conn.query('DELETE FROM orders');
     await conn.query('DELETE FROM orderProducts');
-    
+
     conn.release();
   });
   describe('Showing products of orders', () => {
     it('shows all orders and products', async () => {
-      const result = await opStore.allOrders()
+      const result = await opStore.allOrders();
       expect(result[0].status).toBe('active');
-      expect(result[0].username).toBe('avicii')
-      expect(result[0].order_items).not.toBeNull
+      expect(result[0].username).toBe('avicii');
+      expect(result[0].order_items).not.toBeNull;
     });
 
     it('shows all products of one order', async () => {
-        const result = await opStore.Orders("1");
-        expect(result[0].status).toBe('active');
-        expect(result[0].username).toBe('avicii')
-        expect(result[0].order_items).not.toBeNull
-      });
+      const result = await opStore.Orders('1');
+      expect(result[0].status).toBe('active');
+      expect(result[0].username).toBe('avicii');
+      expect(result[0].order_items).not.toBeNull;
+    });
 
-      it('shows all products of active orders', async () => {
-        const result = await opStore.activeOrders();
-        expect(result[0].order_id).toBe(1);
-        expect(result[0].status).toBe('active');
-        expect(result[0].username).toBe('avicii')
-        expect(result[0].order_items).not.toBeNull
-      });
-    
-
-  })
-})
+    it('shows all products of active orders', async () => {
+      const result = await opStore.activeOrders();
+      expect(result[0].order_id).toBe(1);
+      expect(result[0].status).toBe('active');
+      expect(result[0].username).toBe('avicii');
+      expect(result[0].order_items).not.toBeNull;
+    });
+  });
+});

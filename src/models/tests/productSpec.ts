@@ -36,9 +36,9 @@ describe('Products Model', () => {
   describe('CRUD', () => {
     it('create method should add a product', async () => {
       const result = await store.create({
-        id:1,
+        id: 1,
         name: 'iphone 12',
-        price: '$700'
+        price: '$700',
       });
 
       expect(result.name).toBe('iphone 12');
