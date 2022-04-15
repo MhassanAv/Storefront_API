@@ -3,8 +3,6 @@ import { authvalidator } from '../middlewares/auth';
 import { user, UserStore } from '../models/user';
 import jwt from 'jsonwebtoken';
 
-
-
 const store = new UserStore();
 
 const index = async (__req: Request, res: Response) => {
@@ -39,18 +37,17 @@ const show = async (req: Request, res: Response) => {
 const create = async (req: Request, res: Response) => {
   try {
     const user: user = {
-      id:req.body.id , // optional
+      id: req.body.id, // optional
       username: req.body.username,
       first_name: req.body.first_name,
       last_name: req.body.last_name,
       password: req.body.password,
-      
     };
 
     const newUser = await store.create(user);
     res.json({
       msg: 'User created',
-      user: { ...newUser },
+      user:{...newUser}
     });
   } catch (err) {
     res.status(400);
@@ -70,7 +67,7 @@ const update = async (req: Request, res: Response) => {
     const edited = await store.edit(user, req.params.id);
     res.json({
       msg: 'updated!',
-      user: { ...edited },
+      user: edited,
     });
   } catch (err) {
     res.status(400).json('msg:something went wrong while updating !');
@@ -92,7 +89,7 @@ const authenticate = async (req: Request, res: Response) => {
     };
     const auth = await store.authenticate(user.username, user.password);
     //edited
-    const token=jwt.sign({ auth }, process.env.TOKEN_KEY as string);
+    const token = jwt.sign({ auth }, process.env.TOKEN_KEY as string);
     if (!auth) {
       return res.status(401).json({
         message: 'the username or password is invalid',
@@ -101,7 +98,7 @@ const authenticate = async (req: Request, res: Response) => {
       return res.status(200).json({
         status: 'success',
         message: 'the user has ben authorized successfully',
-        user: { ...auth, token }, //we can hide the token for more scurity
+        user: { ...auth, token } //we can hide the token for more scurity
       });
     }
   } catch (err) {
@@ -113,7 +110,7 @@ const authenticate = async (req: Request, res: Response) => {
 const usersRoutes = (app: express.Application) => {
   app.get('/users', authvalidator, index);
   app.post('/signin', authenticate);
-  app.put('/users/:id', update);
+  app.put('/users/:id',authvalidator, update);
   app.get('/users/:id', authvalidator, show);
   app.post('/signup', create);
   app.delete('/users/:id', authvalidator, destroy);

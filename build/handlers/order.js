@@ -35,6 +35,7 @@ const show = async (req, res) => {
 const create = async (req, res) => {
     try {
         const order = {
+            id: req.body.id,
             status: req.body.status,
             user_id: req.body.user_auth_id,
         };
@@ -52,6 +53,7 @@ const create = async (req, res) => {
 const update = async (req, res) => {
     try {
         const order = {
+            id: req.body.id,
             status: req.body.status,
             user_id: req.body.user_auth_id,
         };

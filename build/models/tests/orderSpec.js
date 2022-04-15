@@ -16,7 +16,7 @@ const u = {
     username: 'avicii',
     first_name: 'any',
     last_name: 'any',
-    password: 'ok'
+    password: 'ok',
 };
 const po = {
     order_id: 1,
@@ -24,8 +24,9 @@ const po = {
     quantity: 20,
 };
 const p = {
-    name: "iphone 12",
-    price: "$700"
+    id: 1,
+    name: 'iphone 12',
+    price: '$700',
 };
 describe('Orders Model', () => {
     it('should have an index method', () => {
@@ -40,13 +41,11 @@ describe('Orders Model', () => {
     it('should have a update method', () => {
         expect(ostore.edit).toBeDefined();
     });
+    it('should have a addProduct method', () => {
+        expect(ostore.addProduct).toBeDefined();
+    });
     it('should have a delete method', () => {
         expect(ostore.delete).toBeDefined();
-    });
-    beforeAll(async () => {
-        // @ts-ignore
-        await uStore.create(u);
-        await pStore.create(p);
     });
     afterAll(async () => {
         // @ts-ignore
@@ -54,17 +53,23 @@ describe('Orders Model', () => {
         await conn.query('ALTER SEQUENCE orders_id_seq RESTART WITH 1');
         await conn.query('ALTER SEQUENCE users_id_seq RESTART WITH 1');
         await conn.query('ALTER SEQUENCE products_id_seq RESTART WITH 1');
-        await conn.query('DELETE FROM orderProducts');
-        await conn.query('DELETE FROM orders');
+        await conn.query('ALTER SEQUENCE orderProducts_id_seq RESTART WITH 1');
         await conn.query('DELETE FROM users');
         await conn.query('DELETE FROM products');
+        await conn.query('DELETE FROM orders');
+        await conn.query('DELETE FROM orderProducts');
         conn.release();
+    });
+    beforeAll(async () => {
+        await uStore.create(u);
+        await pStore.create(p);
     });
     describe('CRUD', () => {
         it('create method should add a orders', async () => {
             const result = await ostore.create({
+                id: 1,
                 status: 'active',
-                user_id: 1
+                user_id: 1,
             });
             expect(result.status).toBe('active');
             expect(result.user_id).toBe(1);

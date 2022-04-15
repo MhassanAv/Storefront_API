@@ -10,7 +10,7 @@ dotenv.config();
 const pepper = process.env.BCRYPT_PASSWORD as string;
 
 export type user = {
-  id:number;
+  id: number;
   username: string;
   first_name: string;
   last_name: string;
@@ -20,7 +20,6 @@ export type user = {
 //CRUD actions for users table
 
 export class UserStore {
-  
   async index(): Promise<user[]> {
     try {
       // @ts-ignore

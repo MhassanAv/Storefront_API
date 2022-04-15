@@ -3,6 +3,7 @@
 import Client from '../db';
 
 export type product = {
+  id: number;
   name: string;
   price: string;
 };

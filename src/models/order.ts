@@ -2,6 +2,7 @@
 import Client from '../db';
 
 export type order = {
+  id: number;
   status: string;
   user_id: number;
 };
@@ -15,7 +16,6 @@ export type orderProduct = {
 //CRUD actions for orders table
 
 export class orderStore {
-  
   async index(): Promise<order[]> {
     try {
       // @ts-ignore
@@ -77,7 +77,7 @@ export class orderStore {
       const result = await conn.query(sql, [
         opr.order_id,
         opr.product_id,
-        opr.quantity,
+        opr.quantity
       ]);
 
       conn.release();

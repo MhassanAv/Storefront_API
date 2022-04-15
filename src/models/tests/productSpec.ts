@@ -36,28 +36,27 @@ describe('Products Model', () => {
   describe('CRUD', () => {
     it('create method should add a product', async () => {
       const result = await store.create({
-        name: "iphone 12",
-        price:"$700"
+        id:1,
+        name: 'iphone 12',
+        price: '$700'
       });
 
-      expect(result.name).toBe('iphone 12')
-      expect(result.price).toBe('$700')
+      expect(result.name).toBe('iphone 12');
+      expect(result.price).toBe('$700');
     });
-
 
     it('index method should return a list of products', async () => {
       const result = await store.index();
-      
-      expect(result[0].name).toBe('iphone 12')
-      expect(result[0].price).toBe('$700')
+
+      expect(result[0].name).toBe('iphone 12');
+      expect(result[0].price).toBe('$700');
     });
 
     it('show method should return the correct products', async () => {
       const result = await store.show('1');
-      
-      expect(result.name).toBe('iphone 12')
-      expect(result.price).toBe('$700')
-      
+
+      expect(result.name).toBe('iphone 12');
+      expect(result.price).toBe('$700');
     });
 
     it('delete method should remove the products', async () => {

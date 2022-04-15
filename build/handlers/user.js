@@ -48,7 +48,7 @@ const create = async (req, res) => {
         const newUser = await store.create(user);
         res.json({
             msg: 'User created',
-            user: { ...newUser },
+            user: { ...newUser }
         });
     }
     catch (err) {
@@ -68,7 +68,7 @@ const update = async (req, res) => {
         const edited = await store.edit(user, req.params.id);
         res.json({
             msg: 'updated!',
-            user: { ...edited },
+            user: edited,
         });
     }
     catch (err) {
@@ -100,7 +100,7 @@ const authenticate = async (req, res) => {
             return res.status(200).json({
                 status: 'success',
                 message: 'the user has ben authorized successfully',
-                user: { ...auth, token }, //we can hide the token for more scurity
+                user: { ...auth, token } //we can hide the token for more scurity
             });
         }
     }
@@ -112,7 +112,7 @@ const authenticate = async (req, res) => {
 const usersRoutes = (app) => {
     app.get('/users', auth_1.authvalidator, index);
     app.post('/signin', authenticate);
-    app.put('/users/:id', update);
+    app.put('/users/:id', auth_1.authvalidator, update);
     app.get('/users/:id', auth_1.authvalidator, show);
     app.post('/signup', create);
     app.delete('/users/:id', auth_1.authvalidator, destroy);

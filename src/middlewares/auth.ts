@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
 import { Request, Response, NextFunction } from 'express';
- // accessing token after login
+// accessing token after login
 
 dotenv.config();
 //password hashing
@@ -21,7 +21,7 @@ export const authvalidator = (
   next: NextFunction
 ) => {
   try {
-     //adding token to http header instead of doing it maunally
+    //adding token to http header instead of doing it maunally
     const authHeader = req.headers.authorization;
     if (authHeader == null) {
       res.status(401).json({ message: 'Unauthorized' });

@@ -39,8 +39,9 @@ class orderProducts {
             const result = await conn.query(`SELECT user_id, username, order_id, status, name, price ,quantity FROM products RIGHT JOIN orderProducts ON products.id = orderProducts.product_id RIGHT JOIN orders ON orders.id = orderProducts.order_id LEFT JOIN users on users.id = orders.user_id WHERE orders.id =($1)`, [parseInt(id)]);
             conn.release();
             const order = {
-                id: result.rows[0].order_id,
-                order_status: result.rows[0].status,
+                order_id: result.rows[0].order_id,
+                user_id: result.rows[0].user_id,
+                status: result.rows[0].status,
                 username: result.rows[0].username,
                 order_items: result.rows.map((row) => ({
                     name: row.name,

@@ -35,6 +35,7 @@ const show = async (req, res) => {
 const create = async (req, res) => {
     try {
         const product = {
+            id: req.body.id,
             name: req.body.name,
             price: req.body.price,
         };
@@ -52,6 +53,7 @@ const create = async (req, res) => {
 const update = async (req, res) => {
     try {
         const product = {
+            id: req.body.id,
             name: req.body.name,
             price: req.body.price,
         };

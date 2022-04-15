@@ -39,15 +39,15 @@ describe('User Model', () => {
   describe('CRUD and authenticate methods', () => {
     it('create method should add a book', async () => {
       const result = await store.create({
-        id:1,
+        id: 1,
         username: 'avicii',
         first_name: 'any',
         last_name: 'any',
         password: 'ok',
       });
-      expect(result.username).toBe('avicii')
-      expect(result.first_name).toBe('any')
-      expect(result.last_name).toBe('any')
+      expect(result.username).toBe('avicii');
+      expect(result.first_name).toBe('any');
+      expect(result.last_name).toBe('any');
     });
 
     it('should authenticate user', async () => {
@@ -58,7 +58,7 @@ describe('User Model', () => {
 
     it('index method should return a list of users', async () => {
       const result = await store.index();
-      
+
       expect(result[0].username).toBe('avicii');
       expect(result[0].first_name).toBe('any');
       expect(result[0].last_name).toBe('any');
@@ -70,7 +70,6 @@ describe('User Model', () => {
       expect(result.username).toBe('avicii');
       expect(result.first_name).toBe('any');
       expect(result.last_name).toBe('any');
-      
     });
 
     it('delete method should remove the user', async () => {

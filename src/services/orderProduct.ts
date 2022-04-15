@@ -2,10 +2,11 @@
 import Client from '../db';
 
 export type orderData = {
-  id: number;
+  order_id: number;
   username: string;
-  order_status: string;
-  order_items: [object];
+  user_id: number;
+  status: string;
+  order_items: [string | number];
 };
 //getting all orders in store in detail by joining 3 tables to get all data required
 
@@ -36,7 +37,9 @@ export class orderProducts {
 
       conn.release();
 
+
       return result.rows;
+      
     } catch (err) {
       throw new Error(`unable get products and orders: ${err}`);
     }
@@ -54,8 +57,9 @@ export class orderProducts {
       conn.release();
 
       const order: orderData = {
-        id: result.rows[0].order_id,
-        order_status: result.rows[0].status,
+        order_id: result.rows[0].order_id,
+        user_id: result.rows[0].user_id,
+        status: result.rows[0].status,
         username: result.rows[0].username,
         order_items: result.rows.map(
           (row: {
