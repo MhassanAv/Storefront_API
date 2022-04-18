@@ -94,7 +94,7 @@ i will add the endpoints as they are in src code to expose the http request and 
 
 ### JWTs
 
-you will take user token and place it in header so that you can access certien routes
+you will take user token and place it in header so that you can access certain routes
 
 
 
