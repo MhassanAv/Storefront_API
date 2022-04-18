@@ -74,8 +74,15 @@ const update = async (req, res) => {
   }
 };
 const destroy = async (req, res) => {
-  const deleted = await store.delete(req.params.id);
-  res.json(deleted);
+  try {
+    const deleted = await store.delete(req.params.id);
+    res.json(deleted);
+  } catch (err) {
+    res.json({
+      msg: 'there is an error',
+      err,
+    });
+  }
 };
 const authenticate = async (req, res) => {
   try {
@@ -106,10 +113,10 @@ const authenticate = async (req, res) => {
   }
 };
 const usersRoutes = (app) => {
-  app.get('/users', auth_1.authvalidator, index);
+  app.get('/users', index);
   app.post('/signin', authenticate);
   app.put('/users/:id', auth_1.authvalidator, update);
-  app.get('/users/:id', auth_1.authvalidator, show);
+  app.get('/users/:id', show);
   app.post('/signup', create);
   app.delete('/users/:id', auth_1.authvalidator, destroy);
 };

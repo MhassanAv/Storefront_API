@@ -49,16 +49,6 @@ describe('Test endpoint & CRUD users', () => {
   });
 
   describe('Security testing', () => {
-    it('index', async () => {
-      const response = await request.get('/users');
-      expect(response.status).toBe(401); //no token
-    });
-
-    it('getone', async () => {
-      const response = await request.get('/users/1');
-      expect(response.status).toBe(401); //no token
-    });
-
     it('update', async () => {
       const response = await request.put('/users/1').send({
         username: 'avicii',
@@ -77,18 +67,13 @@ describe('Test endpoint & CRUD users', () => {
 
   describe('CRUD functionality testing', () => {
     it('index', async () => {
-      const response = await request
-        .get('/users')
-        .set('authorization', `Bearer ${token}`)
-        .send({ user_auth_id: 1 });
-      expect(response.status).toBe(200); //token
+      const response = await request.get('/users');
+
+      expect(response.status).toBe(200);
     });
 
     it('getone', async () => {
-      const response = await request
-        .get('/users/1')
-        .set('authorization', `Bearer ${token}`)
-        .send({ user_auth_id: 1 });
+      const response = await request.get('/users/1');
       expect(response.status).toBe(200);
       expect(response.body.user.username).toBe('avicii'); //token
     });
@@ -98,7 +83,6 @@ describe('Test endpoint & CRUD users', () => {
         .put('/users/1')
         .set('authorization', `Bearer ${token}`)
         .send({
-          user_auth_id: 1,
           username: 'avicii',
           first_name: 'an',
           last_name: 'any',
@@ -111,8 +95,7 @@ describe('Test endpoint & CRUD users', () => {
     it('delete', async () => {
       const response = await request
         .delete('/users/1')
-        .set('authorization', `Bearer ${token}`)
-        .send({ user_auth_id: 1 });
+        .set('authorization', `Bearer ${token}`);
       expect(response.status).toBe(200);
       expect(response.body).toBeNull; //token
     });

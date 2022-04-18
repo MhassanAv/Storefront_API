@@ -47,7 +47,7 @@ describe('Test endpoint & CRUD orders', () => {
     await request
       .post('/products')
       .set('authorization', `Bearer ${token}`)
-      .send({ user_auth_id: 1, ...p });
+      .send({ ...p });
   });
   describe('Test endpoint responses of orders', () => {
     describe('Security testing', () => {
@@ -88,23 +88,21 @@ describe('Test endpoint & CRUD orders', () => {
           .post('/orders')
           .set('authorization', `Bearer ${token}`)
           .send({
-            user_auth_id: 1,
             status: 'active',
+            user_id: 1,
           });
         expect(response.status).toBe(200); //no token
       });
       it('index', async () => {
         const response = await request
           .get('/orders')
-          .set('authorization', `Bearer ${token}`)
-          .send({ user_auth_id: 1 });
+          .set('authorization', `Bearer ${token}`);
         expect(response.status).toBe(200); //token
       });
       it('getone', async () => {
         const response = await request
           .get('/orders/1')
-          .set('authorization', `Bearer ${token}`)
-          .send({ user_auth_id: 1 });
+          .set('authorization', `Bearer ${token}`);
         expect(response.status).toBe(200);
         expect(response.body.order.status).toBe('active'); //token
       });
@@ -112,7 +110,7 @@ describe('Test endpoint & CRUD orders', () => {
         const response = await request
           .post('/orders/1/products/1')
           .set('authorization', `Bearer ${token}`)
-          .send({ user_auth_id: 1, ...po });
+          .send({ ...po });
         expect(response.status).toBe(200); //token
       });
       it('update', async () => {
@@ -120,7 +118,6 @@ describe('Test endpoint & CRUD orders', () => {
           .put('/orders/1')
           .set('authorization', `Bearer ${token}`)
           .send({
-            user_auth_id: 1,
             status: 'done',
             user_id: 1,
           });
@@ -130,8 +127,7 @@ describe('Test endpoint & CRUD orders', () => {
       it('delete', async () => {
         const response = await request
           .delete('/orders/1')
-          .set('authorization', `Bearer ${token}`)
-          .send({ user_auth_id: 1 });
+          .set('authorization', `Bearer ${token}`);
         expect(response.status).toBe(200);
         expect(response.body).toBeNull; //token
       });

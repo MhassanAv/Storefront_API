@@ -48,16 +48,6 @@ describe('Test endpoint & CRUD porducts', () => {
         expect(response.status).toBe(401); //no token
       });
 
-      it('index', async () => {
-        const response = await request.get('/products');
-        expect(response.status).toBe(401); //no token
-      });
-
-      it('getone', async () => {
-        const response = await request.get('/products/1');
-        expect(response.status).toBe(401); //no token
-      });
-
       it('update', async () => {
         const response = await request.put('/products/1').send({
           name: 'iphone 13',
@@ -78,25 +68,18 @@ describe('Test endpoint & CRUD porducts', () => {
           .post('/products')
           .set('authorization', `Bearer ${token}`)
           .send({
-            user_auth_id: 1,
             ...p,
           });
         expect(response.status).toBe(200); //no token
       });
 
       it('index', async () => {
-        const response = await request
-          .get('/products')
-          .set('authorization', `Bearer ${token}`)
-          .send({ user_auth_id: 1 });
+        const response = await request.get('/products');
         expect(response.status).toBe(200); //token
       });
 
       it('getone', async () => {
-        const response = await request
-          .get('/products/1')
-          .set('authorization', `Bearer ${token}`)
-          .send({ user_auth_id: 1 });
+        const response = await request.get('/products/1');
         expect(response.status).toBe(200);
         expect(response.body.product.price).toBe('$700'); //token
       });
@@ -106,7 +89,6 @@ describe('Test endpoint & CRUD porducts', () => {
           .put('/products/1')
           .set('authorization', `Bearer ${token}`)
           .send({
-            user_auth_id: 1,
             name: 'iphone 13',
             price: '$800',
           });
@@ -118,8 +100,7 @@ describe('Test endpoint & CRUD porducts', () => {
       it('delete', async () => {
         const response = await request
           .delete('/products/1')
-          .set('authorization', `Bearer ${token}`)
-          .send({ user_auth_id: 1 });
+          .set('authorization', `Bearer ${token}`);
         expect(response.status).toBe(200);
         expect(response.body).toBeNull; //token
       });

@@ -4,11 +4,18 @@ const order_1 = require('../models/order');
 const auth_1 = require('../middlewares/auth');
 const store = new order_1.orderStore();
 const index = async (_req, res) => {
-  const orders = await store.index();
-  if (!orders.length) {
-    res.status(404).json({ message: 'no orders are found!' });
+  try {
+    const orders = await store.index();
+    if (!orders.length) {
+      res.status(404).json({ message: 'no orders are found!' });
+    }
+    res.json(orders);
+  } catch (err) {
+    res.json({
+      msg: 'there is an error',
+      err,
+    });
   }
-  res.json(orders);
 };
 const show = async (req, res) => {
   try {
@@ -35,7 +42,7 @@ const create = async (req, res) => {
     const order = {
       id: req.body.id,
       status: req.body.status,
-      user_id: req.body.user_auth_id,
+      user_id: req.body.user_id,
     };
     const newOrder = await store.create(order);
     res.json({
@@ -52,11 +59,10 @@ const update = async (req, res) => {
     const order = {
       id: req.body.id,
       status: req.body.status,
-      user_id: req.body.user_auth_id,
+      user_id: req.body.user_id,
     };
     const edited = await store.edit(order, req.params.id);
     res.json({
-      user_auth_id: req.body.user_auth_id,
       msg: 'updated!',
       order: { ...edited },
     });
@@ -65,8 +71,15 @@ const update = async (req, res) => {
   }
 };
 const destroy = async (req, res) => {
-  const deleted = await store.delete(req.params.id);
-  res.json(deleted);
+  try {
+    const deleted = await store.delete(req.params.id);
+    res.json(deleted);
+  } catch (err) {
+    res.json({
+      msg: 'there is an error',
+      err,
+    });
+  }
 };
 const addProduct = async (req, res) => {
   const orderProduct = {

@@ -56,7 +56,6 @@ const update = async (req, res) => {
     };
     const edited = await store.edit(product, req.params.id);
     res.json({
-      user_auth_id: req.body.user_auth_id,
       msg: 'updated!',
       product: { ...edited },
     });
@@ -65,13 +64,20 @@ const update = async (req, res) => {
   }
 };
 const destroy = async (req, res) => {
-  const deleted = await store.delete(req.params.id);
-  res.json(deleted);
+  try {
+    const deleted = await store.delete(req.params.id);
+    res.json(deleted);
+  } catch (err) {
+    res.json({
+      msg: 'there is an error',
+      err,
+    });
+  }
 };
 const productsRoutes = (app) => {
-  app.get('/products', auth_1.authvalidator, index);
+  app.get('/products', index);
   app.put('/products/:id', auth_1.authvalidator, update);
-  app.get('/products/:id', auth_1.authvalidator, show);
+  app.get('/products/:id', show);
   app.post('/products', auth_1.authvalidator, create);
   app.delete('/products/:id', auth_1.authvalidator, destroy);
 };

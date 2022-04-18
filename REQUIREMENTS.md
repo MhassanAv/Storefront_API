@@ -49,15 +49,38 @@ first_name
 last_name
 passoword
 
+| Columne       |  type                |
+| ------------- | -------------------- |
+| id            | SERIAL PRIMARY KEY   | 
+| username      | VARCHAR(30)          | 
+| first_name    | VARCHAR(60)          | 
+| last_name     | VARCHAR(60)          | 
+| passoword     | VARCHAR(250)         | 
+
+
 ## products
 id 
 name
 price
 
+
+| Columne       |  type                |
+| ------------- | -------------------- |
+| id            | SERIAL PRIMARY KEY   | 
+| name          | VARCHAR(60)          | 
+| price         | VARCHAR(60)          | 
+
 ## orders
 id
 status
 user_id (foreign key)
+
+
+| Columne       |  type                        |
+| ------------- | ---------------------------- |
+| id            | SERIAL PRIMARY KEY           | 
+| status        | VARCHAR(60)                  | 
+| user_id       | INTEGER REFERENCES users (id)| 
 
 ## orderProducts
 id
@@ -65,3 +88,11 @@ Product_id (foreign key)
 order_id (foreign key)
 quantity
 primary key(id,Product_id,order_id) so that you can add the same product multiple times with no issues
+
+| Columne       |  type                            |
+| ------------- | -------------------------------- |
+| id            | SERIAL                           | 
+| order_id      | INTEGER REFERENCES orders (id)   | 
+| Product_id    | INTEGER REFERENCES products (id) | 
+| quantity      | INTEGER                          | 
+

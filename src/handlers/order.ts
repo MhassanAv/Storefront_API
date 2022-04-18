@@ -5,11 +5,18 @@ import { authvalidator } from '../middlewares/auth';
 const store = new orderStore();
 
 const index = async (_req: Request, res: Response) => {
-  const orders = await store.index();
-  if (!orders.length) {
-    res.status(404).json({ message: 'no orders are found!' });
+  try {
+    const orders = await store.index();
+    if (!orders.length) {
+      res.status(404).json({ message: 'no orders are found!' });
+    }
+    res.json(orders);
+  } catch (err) {
+    res.json({
+      msg: 'there is an error',
+      err,
+    });
   }
-  res.json(orders);
 };
 
 const show = async (req: Request, res: Response) => {
@@ -38,7 +45,7 @@ const create = async (req: Request, res: Response) => {
     const order: order = {
       id: req.body.id,
       status: req.body.status,
-      user_id: req.body.user_auth_id,
+      user_id: req.body.user_id,
     };
 
     const newOrder = await store.create(order);
@@ -57,11 +64,10 @@ const update = async (req: Request, res: Response) => {
     const order: order = {
       id: req.body.id,
       status: req.body.status,
-      user_id: req.body.user_auth_id,
+      user_id: req.body.user_id,
     };
     const edited = await store.edit(order, req.params.id);
     res.json({
-      user_auth_id: req.body.user_auth_id,
       msg: 'updated!',
       order: { ...edited },
     });
@@ -71,8 +77,15 @@ const update = async (req: Request, res: Response) => {
 };
 
 const destroy = async (req: Request, res: Response) => {
-  const deleted = await store.delete(req.params.id);
-  res.json(deleted);
+  try {
+    const deleted = await store.delete(req.params.id);
+    res.json(deleted);
+  } catch (err) {
+    res.json({
+      msg: 'there is an error',
+      err,
+    });
+  }
 };
 
 const addProduct = async (req: Request, res: Response) => {

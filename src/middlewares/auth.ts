@@ -34,13 +34,9 @@ export const authvalidator = (
           token,
           process.env.TOKEN_KEY as unknown as string
         );
-        const userId: number = JSON.parse(JSON.stringify(decoded)).auth.id;
-        if (decoded != null && userId === req.body.user_auth_id) {
+        if (decoded != null) {
           res.status(200);
           next();
-        }
-        if (userId != req.body.user_auth_id) {
-          res.status(401).json({ message: 'Unauthorized : id does not match' });
         }
       }
     }
