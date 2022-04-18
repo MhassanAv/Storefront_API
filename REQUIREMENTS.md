@@ -43,11 +43,11 @@ These are the notes from a meeting with the frontend developer that describe wha
 #### Database Schema
 
 ## User
-id
-username (unique) 2 users can't have the same username
-first_name
-last_name
-passoword
+- id
+- username (unique) 2 users can't have the same username
+- first_name
+- last_name
+- passoword
 
 | Columne       |  type                |
 | ------------- | -------------------- |
@@ -59,9 +59,9 @@ passoword
 
 
 ## products
-id 
-name
-price
+- id 
+- name
+- price
 
 
 | Columne       |  type                |
@@ -71,9 +71,9 @@ price
 | price         | VARCHAR(60)          | 
 
 ## orders
-id
-status
-user_id (foreign key)
+- id
+- status
+- user_id (foreign key)
 
 
 | Columne       |  type                        |
@@ -83,11 +83,11 @@ user_id (foreign key)
 | user_id       | INTEGER REFERENCES users (id)| 
 
 ## orderProducts
-id
-Product_id (foreign key)
-order_id (foreign key)
-quantity
-primary key(id,Product_id,order_id) so that you can add the same product multiple times with no issues
+- id
+- Product_id (foreign key)
+- order_id (foreign key)
+- quantity
+- primary key(id,Product_id,order_id) so that you can add the same product multiple times with no issues
 
 | Columne       |  type                            |
 | ------------- | -------------------------------- |
